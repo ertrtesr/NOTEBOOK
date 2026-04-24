@@ -100,7 +100,7 @@ export function NotesListPage() {
             <button
               type="button"
               onClick={() => void load()}
-              className="mt-2 text-brand hover:underline"
+              className="mt-2 text-gray-700 hover:underline"
             >
               重试
             </button>

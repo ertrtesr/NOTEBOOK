@@ -54,7 +54,7 @@ export function LoginPage() {
         </h1>
         <p className="mt-2 text-center text-sm text-gray-500">
           还没有账号？{" "}
-          <Link to="/register" className="font-medium text-brand hover:text-brand-dark">
+          <Link to="/register" className="font-medium text-gray-700 hover:text-gray-900">
             注册
           </Link>
         </p>

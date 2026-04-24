@@ -50,7 +50,7 @@ export function RegisterPage() {
         </h1>
         <p className="mt-2 text-center text-sm text-gray-500">
           已有账号？{" "}
-          <Link to="/login" className="font-medium text-brand hover:text-brand-dark">
+          <Link to="/login" className="font-medium text-gray-700 hover:text-gray-900">
             登录
           </Link>
         </p>
