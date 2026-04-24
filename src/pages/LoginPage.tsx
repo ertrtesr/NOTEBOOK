@@ -1,0 +1,111 @@
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { signIn } from "@/lib/api";
+import { isSupabaseConfigured } from "@/lib/supabase";
+import { useAuthStore } from "@/stores/authStore";
+
+export function LoginPage() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const user = useAuthStore((s) => s.user);
+  const initialized = useAuthStore((s) => s.initialized);
+  const from = (location.state as { from?: { pathname: string } })?.from
+    ?.pathname;
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!initialized) return;
+    if (user) navigate("/", { replace: true });
+  }, [initialized, user, navigate]);
+
+  useEffect(() => {
+    const st = location.state as { registered?: boolean } | null;
+    if (st?.registered) {
+      window.history.replaceState({}, document.title);
+    }
+  }, [location.state]);
+
+  async function onSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setError(null);
+    if (!isSupabaseConfigured) {
+      setError("请先配置 Supabase 环境变量，参见 .env.example");
+      return;
+    }
+    setLoading(true);
+    const res = await signIn(email.trim(), password);
+    setLoading(false);
+    if (res.error) {
+      setError(res.error.message);
+      return;
+    }
+    navigate(from && from !== "/login" ? from : "/", { replace: true });
+  }
+
+  return (
+    <div className="flex min-h-full flex-col items-center justify-center px-4 py-12">
+      <div className="w-full max-w-sm rounded-md border border-gray-200 bg-white p-8 shadow-sm">
+        <h1 className="text-center text-2xl font-semibold text-gray-900">
+          登录
+        </h1>
+        <p className="mt-2 text-center text-sm text-gray-500">
+          还没有账号？{" "}
+          <Link to="/register" className="font-medium text-brand hover:text-brand-dark">
+            注册
+          </Link>
+        </p>
+        {(location.state as { registered?: boolean } | null)?.registered ? (
+          <p className="mt-4 rounded-md bg-emerald-50 px-3 py-2 text-center text-sm text-emerald-800">
+            注册成功。若项目开启了邮箱验证，请先查收邮件再登录。
+          </p>
+        ) : null}
+        <form className="mt-8 space-y-4" onSubmit={(e) => void onSubmit(e)}>
+          {error ? (
+            <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">
+              {error}
+            </p>
+          ) : null}
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              邮箱
+            </label>
+            <input
+              id="email"
+              type="email"
+              autoComplete="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 outline-none focus:border-indigo-500"
+            />
+          </div>
+          <div>
+            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              密码
+            </label>
+            <input
+              id="password"
+              type="password"
+              autoComplete="current-password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 outline-none focus:border-indigo-500"
+            />
+          </div>
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full rounded-md bg-brand px-4 py-2 font-medium text-white hover:bg-brand-dark disabled:opacity-60"
+          >
+            {loading ? "登录中…" : "登录"}
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}

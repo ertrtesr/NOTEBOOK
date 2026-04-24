@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, system-ui, sans-serif;
+  @apply bg-gray-50 text-gray-900 antialiased;
+}
+
+/* Prose-like markdown preview */
+.note-preview {
+  @apply text-gray-800 leading-relaxed;
+}
+.note-preview h1 {
+  @apply text-2xl font-semibold mt-6 mb-3;
+}
+.note-preview h2 {
+  @apply text-xl font-semibold mt-5 mb-2;
+}
+.note-preview h3 {
+  @apply text-lg font-semibold mt-4 mb-2;
+}
+.note-preview p {
+  @apply my-2;
+}
+.note-preview ul {
+  @apply list-disc pl-6 my-2;
+}
+.note-preview ol {
+  @apply list-decimal pl-6 my-2;
+}
+.note-preview code {
+  @apply bg-gray-100 px-1 py-0.5 rounded text-sm font-mono;
+}
+.note-preview pre {
+  @apply bg-gray-900 text-gray-100 p-4 rounded-md overflow-x-auto my-3 text-sm;
+}
+.note-preview pre code {
+  @apply bg-transparent p-0 text-inherit;
+}
+.note-preview a {
+  @apply text-brand hover:text-brand-dark underline;
+}
+.note-preview blockquote {
+  @apply border-l-4 border-gray-300 pl-4 italic text-gray-600 my-3;
+}
+.note-preview table {
+  @apply w-full border-collapse text-sm my-3;
+}
+.note-preview th,
+.note-preview td {
+  @apply border border-gray-200 px-3 py-2;
+}
+.note-preview th {
+  @apply bg-gray-100 font-medium;
+}

@@ -1,0 +1,30 @@
+项目：在线笔记应用
+
+技术栈：
+- React 18 + TypeScript + Vite
+- Tailwind CSS + Headless UI
+- CodeMirror 6
+- Supabase
+- Zustand (状态管理)
+
+代码规范：
+- 使用函数式组件
+- 所有组件必须有 TypeScript 类型定义
+- Props 类型命名：组件名 + Props (如 EditorProps)
+- 样式只用 Tailwind CSS
+- 不使用 any 类型
+- API 调用必须有错误处理
+
+设计规范：
+- 主色调：#6366F1
+- 圆角：rounded-md (6px)
+- 间距：使用 Tailwind 的标准间距 (4, 8, 12, 16...)
+- 按钮：px-4 py-2, hover 时变深色
+- 输入框：border-gray-300, focus 时 border-indigo-500
+
+命名规范：
+- 组件文件：PascalCase (如 NoteEditor.tsx)
+- 工具函数：camelCase (如 formatDate.ts)
+- 常量：UPPER_SNAKE_CASE (如 API_URL)
+
+请始终遵循这些规范。
